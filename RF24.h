@@ -2564,11 +2564,10 @@ private:
  *
  * 3. Install the library
  * @code sudo ./setup.py install  @endcode or @code sudo python3 setup.py install @endcode
- * See the additional [Platform Support](pages.html) pages for information on connecting your hardware  <br>
- *
+ * See the additional <a href="pages.html">Platform Support pages</a> for information on connecting your hardware  <br>
  * See the included [*.py files in the "examples_linux" folder](examples.html) for usage information.
  *
- * 5. Running the Example: <br>
+ * 4. Running the Example: <br>
  * Edit the getting_started.py example to configure the appropriate pins per the above documentation:
  * @code nano getting_started.py   @endcode
  * Configure another device, Arduino or RPi with the [getting_started.py example](examples_linux_2getting_started_8py-example.html)<br>
