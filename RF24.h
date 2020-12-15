@@ -2566,7 +2566,7 @@ private:
  * @code sudo ./setup.py install  @endcode or @code sudo python3 setup.py install @endcode
  * See the additional [Platform Support](pages.html) pages for information on connecting your hardware  <br>
  *
- * See the included [*.py files in the "examples_linux" folder](example.html) for usage information.
+ * See the included [*.py files in the "examples_linux" folder](examples.html) for usage information.
  *
  * 5. Running the Example: <br>
  * Edit the getting_started.py example to configure the appropriate pins per the above documentation:
