@@ -2565,6 +2565,7 @@ private:
  * 3. Install the library
  * @code sudo ./setup.py install  @endcode or @code sudo python3 setup.py install @endcode
  * See the additional <a href="pages.html">Platform Support pages</a> for information on connecting your hardware  <br>
+ *
  * See the included [*.py files in the "examples_linux" folder](examples.html) for usage information.
  *
  * 4. Running the Example: <br>
@@ -2572,7 +2573,7 @@ private:
  * @code nano getting_started.py   @endcode
  * Configure another device, Arduino or RPi with the [getting_started.py example](examples_linux_2getting_started_8py-example.html)<br>
  * Run the example
- * @code sudo python3 getting_started.py @endcode
+ * @code sudo python getting_started.py @endcode or @code sudo python3 getting_started.py @endcode
  *
  * <br><br><br>
  *
