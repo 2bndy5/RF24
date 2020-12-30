@@ -1,0 +1,69 @@
+site_name: RF24 Revamped
+docs_dir: docs/mkdocs
+theme: material
+nav:
+  - index.md
+  - Classes:
+    - Classes/classRF24.md
+  - Related Pages:
+    - Pages\md_docs_arduino.md
+    - Pages\md_docs_attiny.md
+    - Pages\md_docs_atxmega.md
+    - Pages\md_docs_common_issues.md
+    - Pages\md_docs_cross_compilation.md
+    - Pages\md_docs_linux_install.md
+    - Pages\md_docs_mraa.md
+    - Pages\md_docs_rpi_general.md
+    - Porting:
+      - Pages\md_docs_portability.md
+      - Classes/classGPIO.md
+      - Classes/classSPI.md
+  - Files:
+    - List: Files/files.md
+    - Files\Makefile.md
+    - Files\RF24Revamped_8cpp.md
+    - Files\RF24Revamped_8h.md
+    - Files\RF24__arch__config_8h.md
+    - Files\RF24__config_8h.md
+    - Files\compatibility_8h.md
+    - Files\dir_08581547d0c03868bb69abd460b21ce0.md
+    - Files\dir_49e56c817e5e54854c35e136979f97ca.md
+    - Files\dir_64e73385a8b7738563c26ce10415b58d.md
+    - Files\gpio_8h.md
+    - Files\includes_8h.md
+    - Files\nRF24L01_8h.md
+    - Files\printf_8h.md
+    - Files\spi_8h.md
+  - Examples:
+    - List: Examples/examples.md
+    - Examples\examples_2AcknowledgementPayloads_2AcknowledgementPayloads_8ino-example.md
+    - Examples\examples_2GettingStarted_2GettingStarted_8ino-example.md
+    - Examples\examples_2InterruptConfigure_2InterruptConfigure_8ino-example.md
+    - Examples\examples_2ManualAcknowledgements_2ManualAcknowledgements_8ino-example.md
+    - Examples\examples_2MulticeiverDemo_2MulticeiverDemo_8ino-example.md
+    - Examples\examples_2StreamingData_2StreamingData_8ino-example.md
+    - Examples\examples_2old_backups_2GettingStarted_HandlingFailures_2GettingStarted_HandlingFailures_8ino-example.md
+    - Examples\examples_2old_backups_2TransferTimeouts_2TransferTimeouts_8ino-example.md
+    - Examples\examples_2old_backups_2pingpair_dyn_2pingpair_dyn_8ino-example.md
+    - Examples\examples_2old_backups_2pingpair_irq_2pingpair_irq_8ino-example.md
+    - Examples\examples_2old_backups_2pingpair_sleepy_2pingpair_sleepy_8ino-example.md
+    - Examples\examples_2old_backups_2scanner_2scanner_8ino-example.md
+    - Examples\examples_2rf24_ATTiny_2rf24ping85_2rf24ping85_8ino-example.md
+    - Examples\examples_2rf24_ATTiny_2timingSearch3pin_2timingSearch3pin_8ino-example.md
+    - Examples\examples_linux_2acknowledgementPayloads_8cpp-example.md
+    - Examples\examples_linux_2gettingstarted_8cpp-example.md
+    - Examples\examples_linux_2manualAcknowledgements_8cpp-example.md
+    - Examples\examples_linux_2multiceiverDemo_8cpp-example.md
+    - Examples\examples_linux_2streamingData_8cpp-example.md
+  # - Modules/groups.md
+  # - Namespaces/namespaces.md
+  # - Namespaces/namespacestd.md
+markdown_extensions:
+  - meta
+  - toc
+  - tables
+  - fenced_code
+  - admonition
+  - pymdownx.superfences
+  # - codehilite:
+  #   linenums: true

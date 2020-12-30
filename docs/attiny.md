@@ -5,7 +5,8 @@ Be sure to have added this core to the Arduino Boards Manager by
 
 See the included rf24ping85 example for pin info and usage
 
-Some versions of Arduino IDE may require a patch to allow use of the full program space on ATTiny<br>
+Some versions of Arduino IDE may require a patch to allow use of the full program space on ATTiny
+
 See https://github.com/TCWORLD/ATTinyCore/tree/master/PCREL%20Patch%20for%20GCC for ATTiny patch
 
 ## Hardware Hardware Configuration

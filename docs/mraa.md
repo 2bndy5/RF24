@@ -10,7 +10,6 @@ RF24 supports all MRAA supported platforms, but might not be tested on each indi
 Build using the [MRAA library](http://iotdk.intel.com/docs/master/mraa/index.html)
 MRAA is not included.
 1. Install, and build MRAA
-
     ```shell
     git clone https://github.com/intel-iot-devkit/mraa.git
     cd mraa
@@ -25,15 +24,14 @@ MRAA is not included.
     ```shell
     nano /etc/ld.so.conf
     ```
-
-    Add the line `/usr/local/lib/arm-linux-gnueabihf`
+    Add the line
+    ```
+    /usr/local/lib/arm-linux-gnueabihf
+    ```
 
     Run
     ```shell
     sudo ldconfig
     ```
 3. Install RF24, using MRAA
-
-    ```eval_rst
-    See `Linux Installation <linux_install.html>`_
-    ```
+See [Linux Installation](linux_install.MD)

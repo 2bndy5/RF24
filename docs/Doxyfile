@@ -32,7 +32,7 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = "RF24"
+PROJECT_NAME           = "RF24 Revamped"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
@@ -170,7 +170,7 @@ FULL_PATH_NAMES        = YES
 # will be relative from the directory where doxygen is started.
 # This tag requires that the tag FULL_PATH_NAMES is set to YES.
 
-STRIP_FROM_PATH        =
+STRIP_FROM_PATH        = ../
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of the
 # path mentioned in the documentation of a class, which tells the reader which
@@ -261,8 +261,14 @@ TAB_SIZE               = 4
 # commands \{ and \} for these it is advised to use the version @{ and @} or use
 # a double escape (\\{ and \\})
 
-ALIASES                = "rst=\xmlonly<verbatim>embed:rst"
-ALIASES               += "endrst=</verbatim>\endxmlonly"
+#ALIASES                = note="!!! note^^"
+#ALIASES               += warning="!!! warning^^"
+#ALIASES               += hint="!!! hint^^"
+#ALIASES               += tip="!!! tip^^"
+#ALIASES               += important="!!! important^^"
+#ALIASES               += danger="!!! danger^^"
+#ALIASES               += see="!!! seealso^^"
+#ALIASES               += seealso="!!! seealso^^"
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C sources
 # only. Doxygen will then generate output that is more tailored for C. For
@@ -826,7 +832,17 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = ../ \
-                         ../utility/Template
+                         ../utility/Template \
+                         ./common_issues.md \
+                         ./cross_compilation.md \
+                         ./linux_install.md \
+                         ./arduino.md \
+                         ./attiny.md \
+                         ./atxmega.md \
+                         ./mraa.md \
+                         ./portability.md \
+                         ./rpi_general.md \
+                         ./index.md
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -910,7 +926,7 @@ RECURSIVE              = NO
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                =
+EXCLUDE                = ../CONTRIBUTING.md
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -1024,7 +1040,7 @@ FILTER_SOURCE_PATTERNS =
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want to reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = ./index.md
 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
@@ -1174,7 +1190,7 @@ IGNORE_PREFIX          =
 # If the GENERATE_HTML tag is set to YES, doxygen will generate HTML output
 # The default value is: YES.
 
-GENERATE_HTML          = NO
+GENERATE_HTML          = YES
 
 # The HTML_OUTPUT tag is used to specify where the HTML docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of

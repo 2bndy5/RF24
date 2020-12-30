@@ -7,7 +7,7 @@
  */
 
 /**
- * @file RF24.h
+ * @file RF24Revamped.h
  *
  * Class declaration for RF24 and helper enums
  */
@@ -25,64 +25,48 @@
 
 
 /**
- * Power Amplifier level. The units dBm (decibel-milliwatts or dB<sub>mW</sub>)
+ * Power Amplifier level. The units dBm (decibel-milliwatts or dB\<sub>mW\</sub>)
  * represents a logarithmic signal loss.
  * @see RF24::setPaLevel(), RF24::getPaLevel()
  */
 typedef enum {
     /**
      * (0) represents:
-     * @rst
-     * +----------+----------------+----------------+
-     * | nRF24L01 | Si24R1 with    | Si24R1 with    |
-     * +----------+----------------+----------------+
-     * |          | lnaEnabled = 1 | lnaEnabled = 0 |
-     * +==========+================+================+
-     * | -18 dBm  |  -6 dBm        |  -12 dBm       |
-     * +----------+----------------+----------------+
-     * @endrst
+     * @xmlonly
+     * nRF24L01 | Si24R1 with `lnaEnabled` = 1 | Si24R1 with `lnaEnabled` = 0
+     * -------- | -------------- | --------------
+     * -18 dBm  |  -6 dBm        |  -12 dBm
+     * @endxmlonly
      */
     RF24_PA_MIN = 0,
 
     /**
      * (1) represents:
-     * @rst
-     * +----------+----------------+----------------+
-     * | nRF24L01 | Si24R1 with    | Si24R1 with    |
-     * +----------+----------------+----------------+
-     * |          | lnaEnabled = 1 | lnaEnabled = 0 |
-     * +==========+================+================+
-     * | -12 dBm  |  0 dBm         |    -4 dBm      |
-     * +----------+----------------+----------------+
-     * @endrst
+     * @xmlonly
+     * nRF24L01 | Si24R1 with `lnaEnabled` = 1 | Si24R1 with `lnaEnabled` = 0
+     * -------- | -------------- | --------------
+     * -12 dBm  |  0 dBm         |    -4 dBm
+     * @endxmlonly
      */
     RF24_PA_LOW,
 
     /**
      * (2) represents:
-     * @rst
-     * +----------+----------------+----------------+
-     * | nRF24L01 | Si24R1 with    | Si24R1 with    |
-     * +----------+----------------+----------------+
-     * |          | lnaEnabled = 1 | lnaEnabled = 0 |
-     * +==========+================+================+
-     * | -6 dBm   |    3 dBm       |    1 dBm       |
-     * +----------+----------------+----------------+
-     * @endrst
+     * @xmlonly
+     * nRF24L01 | Si24R1 with `lnaEnabled` = 1 | Si24R1 with `lnaEnabled` = 0
+     * -------- | -------------- | --------------
+     * -6 dBm   |    3 dBm       |    1 dBm
+     * @endxmlonly
      */
     RF24_PA_HIGH,
 
     /**
      * (3) represents:
-     * @rst
-     * +----------+----------------+----------------+
-     * | nRF24L01 | Si24R1 with    | Si24R1 with    |
-     * +----------+----------------+----------------+
-     * |          | lnaEnabled = 1 | lnaEnabled = 0 |
-     * +==========+================+================+
-     * |  0 dBm   |   7 dBm        |    4 dBm       |
-     * +----------+----------------+----------------+
-     * @endrst
+     * @xmlonly
+     * nRF24L01 | Si24R1 with `lnaEnabled` = 1 | Si24R1 with `lnaEnabled` = 0
+     * -------- | -------------- | --------------
+     *  0 dBm   |   7 dBm        |    4 dBm
+     * @endxmlonly
      */
     RF24_PA_MAX,
     /**
@@ -207,16 +191,13 @@ public:
      * Before using, you create an instance and send in the
      * unique pins that this chip is connected to.
      *
-     * @rst
-     * See `Arduino &lt;arduino.html&gt;`_, `ATTiny &lt;attiny&gt;`_, or `Linux &lt;rpi_general&gt;`_ pages for device specific information.
+     * See [Arduino](arduino.md), [ATTiny](attiny.md), or [Linux](rpi_general.md) pages for device specific information.
      *
-     * .. note::
-     *     Users can specify default SPI speed by modifying ``#define RF24_SPI_SPEED`` in RF24_config.h
+     * @note
+     *     Users can specify default SPI speed by modifying `#define RF24_SPI_SPEED` in RF24_config.h
      *     For Arduino, SPI speed will only be properly configured this way on devices supporting SPI TRANSACTIONS.
-     *     Older\/Unsupported Arduino devices will use a default clock divider and settings configuration
+     *     Older/Unsupported Arduino devices will use a default clock divider and settings configuration
      *     Linux: The old way of setting SPI speeds using BCM2835 driver enums has been removed
-     * @endrst
-     *
      * @param _cepin The pin attached to Chip Enable on the RF module
      * @param _cspin The pin attached to Chip Select
      * @param _spispeed The SPI speed in Hz ie: 1000000 == 1Mhz
@@ -231,16 +212,14 @@ public:
      * Begin operation of the chip
      *
      * Call this in setup(), before calling any other methods.
-     * @rst
-     * .. important:: Use this function to determine if there is a hardware problem
+     * !!! important
+     *     Use this function to determine if there is a hardware problem
      *     before continuing application.
-     *
-     *     .. code-block::
-     *
-     *         if (!radio.begin()) { // if the radio is unresponsive?
-     *             while (1) {}      // hold in infinite loop
-     *         }
-     * @endrst
+     *     ```cpp
+     *     if (!radio.begin()) { // if the radio is unresponsive?
+     *         while (1) {}      // hold in infinite loop
+     *     }
+     *     ```
      * @return
      * - `true` if the radio is not responding to SPI transactions
      * - `false` if the radio is responsive to SPI transactions
@@ -260,19 +239,18 @@ public:
      * 3. Call available() to check for incoming traffic, and read() to get it.
      *
      * Open reading pipe 1 using address `0xCCCECCCECC`
-     * @rst
-     * .. code-block::
+     * ```c++
+     * byte address[] = {0xCC, 0xCE, 0xCC, 0xCE, 0xCC};
+     * radio.openReadingPipe(1,address);
+     * radio.startListening();
+     * ```
+     * @note
      *
-     *     byte address[] = {0xCC, 0xCE, 0xCC, 0xCE, 0xCC};
-     *     radio.openReadingPipe(1,address);
-     *     radio.startListening();
-     *
-     * .. note:: If there was a call to :func:`openReadingPipe()` about pipe 0 prior to
+     *     If there was a call to :func:`openReadingPipe()` about pipe 0 prior to
      *     calling this function, then this function will re-write the address
      *     that was last set to reading pipe 0. This is because :func:`openWritingPipe()`
      *     will overwrite the address to reading pipe 0 for proper auto-ack
      *     functionality.
-     * @endrst
      */
     void startListening(void);
 
@@ -280,56 +258,51 @@ public:
      * Stop listening for incoming messages, and switch to transmit mode.
      *
      * Do this before calling send().
-     * @rst
-     * .. code-block::
+     * ```cpp
+     * radio.stopListening();
+     * radio.send(&data, sizeof(data));
+     * ```
+     * @note
      *
-     *     radio.stopListening();
-     *     radio.send(&amp;data, sizeof(data));
-     *
-     * .. note:: When the ACK payloads feature is enabled, the TX FIFO buffers are
+     *     When the ACK payloads feature is enabled, the TX FIFO buffers are
      *     flushed when calling this function. This is meant to discard any ACK
      *     payloads that were not appended to acknowledgment packets.
-     * @endrst
      */
     void stopListening(void);
 
     /**
      * Check whether there are bytes available to be read
-     * @rst
-     * .. code-block::
-     *
-     *     if(radio.available()){
-     *       radio.read(&amp;data, sizeof(data));
-     *     }
-     *
-     * @endrst
+     * ```cpp
+     * if(radio.available()){
+     *   radio.read(&data, sizeof(data));
+     * }
+     * ```
      * @see any()
      * @return
      * - true if there is a payload available in the RX FIFO buffers
      * - false if there is no payload available in the RX FIFO buffers
      *
-     * @rst
-     * .. warning:: This function relies on the information about the pipe number
+     * !!! warning
+     *
+     *     This function relies on the information about the pipe number
      *     that received the next available payload. According to the datasheet,
      *     the data about the pipe number that received the next available payload
      *     is "unreliable" during a FALLING transition on the IRQ pin. This means
-     *     you should call :func:`clearStatusFlags()` before calling this function
+     *     you should call clearStatusFlags() before calling this function
      *     during an ISR (Interrupt Service Routine).
      *
      *     For example:
+     *     ```cpp
+     *     void isrCallbackFunction() {
+     *       radio.clearStatusFlags(); // resets the IRQ pin to HIGH
+     *       radio.available();        // returned data should now be reliable
+     *     }
      *
-     *     .. code-block::
-     *
-     *         void isrCallbackFunction() {
-     *           radio.clearStatusFlags(); // resets the IRQ pin to HIGH
-     *           radio.available();        // returned data should now be reliable
-     *         }
-     *
-     *         void setup() {
-     *           pinMode(IRQ_PIN, INPUT);
-     *           attachInterrupt(digitalPinToInterrupt(IRQ_PIN), isrCallbackFunction, FALLING);
-     *         }
-     * @endrst
+     *     void setup() {
+     *       pinMode(IRQ_PIN, INPUT);
+     *       attachInterrupt(digitalPinToInterrupt(IRQ_PIN), isrCallbackFunction, FALLING);
+     *     }
+     *     ```
      */
     bool available(void);
 
@@ -338,32 +311,32 @@ public:
      *
      * The length of data read is usually the next available payload's length
      * @param[out] buf Pointer to a buffer where the data should be written
-     * @rst
-     * .. note:: ``void*`` was chosen specifically as a data type to make it easier
+     * @note
+     *
+     *     `void*` was chosen specifically as a data type to make it easier
      *     for beginners to use (no casting needed).
-     * @endrst
      * @param len Maximum number of bytes to read into the buffer. This
      * value should match the length of the object referenced using the
      * `buf` parameter. The absolute maximum number of bytes that can be read
      * in one call is 96.
-     * @rst
-     * .. hint:: Remember that each call to :func:`read()` fetches data from the
+     * !!! hint
+     *
+     *     Remember that each call to read() fetches data from the
      *     RX FIFO beginning with the first byte from the first available
      *     payload. A payload is not removed from the RX FIFO until it's
-     *     entire length (or more) is fetched using :func:read().
+     *     entire length (or more) is fetched using read().
      *
-     *         - If ``len`` parameter's value is less than the available payload's
-     *           length, then the payload remains in the RX FIFO.
-     *         - If ``len`` parameter's value is greater than the first of multiple
-     *           available payloads, then the data saved to the ``buf``
-     *           parameter's object will be supplemented with data from the next
-     *           available payload.
-     *         - If ``len`` parameter's value is greater than the last available
-     *           payload's length, then the last byte in the payload is used as
-     *           padding for the data saved to the ``buf`` parameter's object.
-     *           The nRF24L01 will repeatedly use the last byte from the last
-     *           payload even when :func:`read()` is called with an empty RX FIFO.
-     * @endrst
+     *    - If `len` parameter's value is less than the available payload's
+     *      length, then the payload remains in the RX FIFO.
+     *    - If `len` parameter's value is greater than the first of multiple
+     *      available payloads, then the data saved to the `buf`
+     *      parameter's object will be supplemented with data from the next
+     *      available payload.
+     *    - If `len` parameter's value is greater than the last available
+     *      payload's length, then the last byte in the payload is used as
+     *      padding for the data saved to the `buf` parameter's object.
+     *      The nRF24L01 will repeatedly use the last byte from the last
+     *      payload even when read() is called with an empty RX FIFO.
      * @see any(), available()
      */
     void read(void* buf, uint8_t len);
@@ -377,28 +350,31 @@ public:
      * here). Be sure to call stopListening() prior to calling this function.
      *
      * Addresses are assigned via a byte array, default is 5 byte address length
-     * @rst
-     * .. code-block::
+     * ```cpp
+     * uint8_t addresses[][6] = {"1Node", "2Node"};
+     * radio.openWritingPipe(addresses[0]);
+     * ```
      *
-     *     uint8_t addresses[][6] = {"1Node", "2Node"};
-     *     radio.openWritingPipe(addresses[0]);
-     * .. code-block::
+     * ```cpp
+     * uint8_t address[] = {0xCC, 0xCE, 0xCC, 0xCE, 0xCC};
+     * radio.openWritingPipe(address);
+     * address[0] = 0x33;
+     * radio.openReadingPipe(1, address);
+     * ```
+     * !!! warning
      *
-     *      uint8_t address[] = {0xCC, 0xCE, 0xCC, 0xCE, 0xCC};
-     *      radio.openWritingPipe(address);
-     *      address[0] = 0x33;
-     *      radio.openReadingPipe(1, address);
-     * .. warning:: This function will overwrite the address set to reading pipe 0
+     *     This function will overwrite the address set to reading pipe 0
      *     as stipulated by the datasheet for proper auto-ack functionality in TX
      *     mode. Use this function to ensure proper transmission acknowledgement
      *     when the address set to reading pipe 0 (via :func:`openReadingPipe()`) does
      *     not match the address passed to this function. If the auto-ack feature is
      *     disabled, then this function will still overwrite the address for
      *     reading pipe 0 regardless.
-     * .. note:: There is no address length parameter because this function will
+     * @note
+     *
+     *     There is no address length parameter because this function will
      *     always write the number of bytes that the radio addresses are configured
      *     to use (set with :func:`setAddressLength()`).
-     * @endrst
      * @see setAddressLength(), startListening()
      * @param address The address to be used for outgoing transmissions (uses
      * pipe 0). Coordinate this address amongst other receiving nodes (the
@@ -413,35 +389,37 @@ public:
      * reading pipes, and then call startListening().
      *
      * @see openWritingPipe(), setAddressLength()
-     * @rst
-     * .. note:: Pipes 0 and 1 will store a full 5-byte address. Pipes 2-5 will
+     * @note
+     *
+     *     Pipes 0 and 1 will store a full 5-byte address. Pipes 2-5 will
      *     technically only store a single byte, borrowing up to 4 additional bytes
      *     from pipe 1 per the assigned address width.
      *
      *     Pipes 1-5 should share the same address, except the first byte.
      *     Only the first byte in the array should be unique, e.g.
+     *     ```cpp
+     *     uint8_t addresses[][6] = {"Prime", "2Node", "3xxxx", "4xxxx"};
+     *     openReadingPipe(0, addresses[0]); // address used is "Prime"
+     *     openReadingPipe(1, addresses[1]); // address used is "2Node"
+     *     openReadingPipe(2, addresses[2]); // address used is "3Node"
+     *     openReadingPipe(3, addresses[3]); // address used is "4Node"
+     *     ```
+     * !!! warning
      *
-     *     .. code-block::
-     *
-     *         uint8_t addresses[][6] = {"Prime", "2Node", "3xxxx", "4xxxx"};
-     *         openReadingPipe(0, addresses[0]); // address used is "Prime"
-     *         openReadingPipe(1, addresses[1]); // address used is "2Node"
-     *         openReadingPipe(2, addresses[2]); // address used is "3Node"
-     *         openReadingPipe(3, addresses[3]); // address used is "4Node"
-     *
-     * .. warning:: If the reading pipe 0 is opened by this function, the address
+     *     If the reading pipe 0 is opened by this function, the address
      *     passed to this function (for pipe 0) will be restored at every call to
      *     :func:`startListening()`, but the address for pipe 0 is ONLY restored
      *     if the LSB is a non-zero value.
      *
-     *     Read `this article &lt;http://maniacalbits.blogspot.com/2013/04/rf24-addressing-nrf24l01-radios-require.html&gt;`_
+     *     Read `this article <http://maniacalbits.blogspot.com/2013/04/rf24-addressing-nrf24l01-radios-require.html>`_
      *     to understand how to avoid using malformed addresses. This address
      *     restoration is implemented because of the underlying neccessary
      *     functionality of :func:`openWritingPipe()`.
-     * .. note:: There is no address length parameter because this function will
+     * @note
+     *
+     *     There is no address length parameter because this function will
      *     always write the number of bytes (for pipes 0 and 1) that the radio
      *     addresses are configured to use (set with :func:`setAddressLength()`).
-     * @endrst
      * @param number Which pipe to open. Only pipe numbers 0-5 are available,
      * an address assigned to any pipe number not in that range will be ignored.
      * @param address The 3, 4, or 5 byte address to assign to an RX pipe.
@@ -452,23 +430,24 @@ public:
      * Print a giant block of debugging information to stdout.
      * Only use this function if your application can
      * spare extra bytes of memory.
-     * @rst
-     * .. warning:: Does nothing if stdout is not defined. See fdevopen in stdio.h
+     * !!! warning
+     *
+     *     Does nothing if stdout is not defined. See fdevopen in stdio.h
      *     The printf.h file is included with the library for Arduino.
+     *     ```cpp
+     *     #include "printf.h"
+     *     setup() {
+     *       Serial.begin(115200);
+     *       printf_begin();
+     *       // ...
+     *     }
+     *     ```
+     * @note
      *
-     *     .. code-block::
-     *
-     *         #include "printf.h"
-     *         setup(){
-     *           Serial.begin(115200);
-     *           printf_begin();
-     *           // ...
-     *         }
-     * .. note:: If the automatic acknowledgements feature is configured differently
+     *     If the automatic acknowledgements feature is configured differently
      *     for each pipe, then a binary representation is used in which bits 0-5
-     *     represent pipes 0-5 respectively. A ``0`` means the feature is disabled and
-     *     a ``1`` means the feature is enabled.
-     * @endrst
+     *     represent pipes 0-5 respectively. A `0` means the feature is disabled and
+     *     a `1` means the feature is enabled.
      */
     void printDetails(void);
 
@@ -507,18 +486,17 @@ public:
      * Enter low-power mode
      *
      * To return to normal power mode, call powerUp().
-     * @rst
-     * .. note:: After calling :func:`startListening()`, a basic radio will consume about
+     * @note
+     *
+     *     After calling startListening(), a basic radio will consume about
      *     13.5mA at max PA level. During active transmission, the radio will consume
      *     about 11.5mA, but this will be reduced to 26uA (.026mA) between sending.
      *     In full powerDown mode, the radio will consume approximately 900nA (.0009mA)
-     *
-     * .. code-block::
-     *
-     *     radio.powerDown();
-     *     avr_enter_sleep_mode(); // Custom function to sleep the device
-     *     radio.powerUp();
-     * @endrst
+     * ```cpp
+     * radio.powerDown();
+     * avr_enter_sleep_mode(); // Custom function to sleep the device
+     * radio.powerUp();
+     * ```
      */
     void powerDown(void);
 
@@ -527,9 +505,9 @@ public:
      * calling powerDown()
      *
      * To return to low power mode, call powerDown().
-     * @rst
-     * .. note:: This will take up to 5ms for maximum compatibility.
-     * @endrst
+     * @note
+     *
+     *     This will take up to 5ms for maximum compatibility.
      */
     void powerUp(void);
 
@@ -569,23 +547,26 @@ public:
      * The next time a message is received on a specified @p pipe, the data in
      * @p buf will be sent back in the ACK payload.
      * @see enableAckPayload(), setDynamicPayloads()
-     * @rst
-     * .. important:: Dynamic payloads must be enabled.
-     * .. note:: ACK payloads are dynamic payloads. Calling :func:`enableAckPayload()`
+     * !!! important
+     *
+     *     Dynamic payloads must be enabled.
+     * @note
+     *
+     *     ACK payloads are dynamic payloads. Calling enableAckPayload()
      *     will automatically enable dynamic payloads on pipe 0 (required for TX
      *     mode when expecting ACK payloads). To use ACK payloads on any other
-     *     pipe in RX mode, call :func:`setDynamicPayloads()`.
-     * @endrst
+     *     pipe in RX mode, call setDynamicPayloads().
+     * @note
      *
-     * @rst
-     * .. note:: ACK payloads are handled automatically by the radio chip when a
+     *     ACK payloads are handled automatically by the radio chip when a
      *     regular payload is received. It is important to discard regular payloads
-     *     in the TX FIFO (using :func:`flushTx()`) before loading the first ACK payload
+     *     in the TX FIFO (using flushTx()) before loading the first ACK payload
      *     into the TX FIFO. This function can be called before and after calling
-     *     :func:`startListening()`.
-     * .. warning:: Only 3 of these ACK payloads can be pending at any time because there
+     *     startListening().
+     * !!! warning
+     *
+     *     Only 3 of these ACK payloads can be pending at any time because there
      *     are only 3 FIFO buffers.
-     * @endrst
      * @param pipe Which pipe# (typically 1-5) will get this response.
      * @param buf Pointer to data that is sent
      * @param len Length of the data to send, up to 32 bytes max.  Not affected
@@ -622,17 +603,18 @@ public:
     /**
      * Write a payload to the TX FIFO buffers. This function actually serves as
      * a helper to send().
+     * @note
      *
-     * @rst
-     * .. note:: This function leaves the CE pin HIGH, so the radio will remain in TX or
-     *     StandBy-II Mode until a :func:`ce()` is called to set the pin LOW (into
-     *     StandBy-I mode). Can be used as an alternative to :func:`send()` if using
+     *     This function leaves the CE pin HIGH, so the radio will remain in TX or
+     *     StandBy-II Mode until a ce() is called to set the pin LOW (into
+     *     StandBy-I mode). Can be used as an alternative to send() if using
      *     all 3 levels of the TX FIFO  to manage multiple payloads at once.
-     * .. warning:: It is important to never keep the nRF24L01 in TX mode with FIFO full
+     * !!! warning
+     *
+     *     It is important to never keep the nRF24L01 in TX mode with FIFO full
      *     for more than 4ms at a time. If the auto retransmit/autoAck is enabled, the
      *     nRF24L01 is never in TX mode long enough to disobey this rule. Allow the FIFO
-     *     to clear by calling :func:`ce()` to the the CE pin inactive LOW.
-     * @endrst
+     *     to clear by calling ce() to the the CE pin inactive LOW.
      * @see send(), setAutoAck(), allowMulticast()
      * @param buf Pointer to the data to be sent
      * @param len Number of bytes to be sent
@@ -665,12 +647,12 @@ public:
      * This function only applies when taking advantage of the
      * auto-retry feature. See setAutoAck() and setAutoRetry() to configure the
      * auto-retry feature.
-     * @rst
-     * .. note:: This is to be used AFTER auto-retry fails if wanting to resend
+     * @note
+     *
+     *     This is to be used AFTER auto-retry fails if wanting to resend
      *     using the built-in payload reuse feature. In the event of a
      *     re-transmission failure, simply call this function again to
      *     resume re-transmission of the same payload.
-     * @endrst
      * @returns
      * - `true` if re-transmission was successful.
      * - `false` if the re-transmission failed or the TX FIFO was already empty.
@@ -694,17 +676,13 @@ public:
      * or equal to -64dBm is present on the channel. This can be used to
      * check for interference on the current channel and
      * channel hopping strategies.
-     *
-     * @rst
-     * .. code-block::
-     *
-     *     bool goodSignal = radio.testRpd();
-     *     if(radio.available()){
-     *        Serial.println(goodSignal ? "Strong signal &gt; 64dBm" : "Weak signal &lt; 64dBm" );
-     *        radio.read(0, 0);
-     *     }
-     *
-     * @endrst
+     * ```cpp
+     * bool goodSignal = radio.testRpd();
+     * if(radio.available()){
+     *    Serial.println(goodSignal ? "Strong signal > 64dBm" : "Weak signal < 64dBm" );
+     *    radio.read(0, 0);
+     * }
+     * ```
      * @see startCarrierWave(), stopCarrierWave()
      * @return This data is reset upon entering RX mode.
      * - `true` if a signal with an amplitude of greater than or equal to -64dBm
@@ -755,11 +733,11 @@ public:
      * 1500 us.
      * @param count How many auto-retry attempts before giving up. The default and
      * maximum is 15. Use 0 to disable the auto-retry feature all together.
-     * @rst
-     * .. note:: Disabling the auto-retry feature on a transmitter still uses the
+     * @note
+     *
+     *     Disabling the auto-retry feature on a transmitter still uses the
      *     auto-ack feature (if enabled), except it will not retry to transmit if
      *     the payload was not acknowledged on the first attempt.
-     * @endrst
      * @see lastTxArc(), setArd(), setArc()
      */
     void setAutoRetry(uint16_t delay, uint8_t count);
@@ -773,13 +751,11 @@ public:
      * number of auto-retry attempts allowed.
      * @returns This function returns nothing (`void`). All returned data is
      * stored in the referenced variables passed as arguments.
-     * @rst
-     * .. code-block::
-     *
-     *     uint16_t autoDelay;
-     *     uint8_t autoCount;
-     *     radio.getAutoRetry(&amp;autoDelay, &amp;autoCount);
-     * @endrst
+     * ```cpp
+     * uint16_t autoDelay;
+     * uint8_t autoCount;
+     * radio.getAutoRetry(&autoDelay, &autoCount);
+     * ```
      * @see setAutoRetry(), getArd(), getArc()
      */
     void getAutoRetry(uint16_t* delay, uint8_t* count);
@@ -877,13 +853,13 @@ public:
      * automatically enable the auto-ack feature on pipe 0 since the auto-ack
      * feature is enabled for all pipes by default.
      * @see setAutoAck()
-     * @rst
-     * .. note:: ACK payloads are dynamic payloads. This function automatically
+     * @note
+     *
+     *     ACK payloads are dynamic payloads. This function automatically
      *     enables dynamic payloads on pipe 0 by default. Call
-     *     :func:`setDynamicPayloads()` to enable on all pipes (especially for RX
+     *     setDynamicPayloads() to enable on all pipes (especially for RX
      *     nodes that use pipes other than pipe 0 to receive transmissions expecting
      *     responses with ACK payloads).
-     * @endrst
      */
     void enableAckPayload(void);
 
@@ -952,17 +928,17 @@ public:
     /**
      * Enable dynamic ACKs (single write multicast or unicast) for chosen
      * messages.
-     * @rst
-     * .. note:: This function must be called once before using the multicast
+     * @note
+     *
+     *     This function must be called once before using the multicast
      *     parameter for any functions that offer it. To use multicast behavior
      *     about all outgoing payloads (using pipe 0) or incoming payloads
-     *     (concerning all RX pipes), use :func:`setAutoAck()`.
+     *     (concerning all RX pipes), use setAutoAck().
      *
-     * .. code-block::
-     *
-     *     radio.send(&amp;data, 32, 1); // Sends a payload with no acknowledgement requested
-     *     radio.send(&amp;data, 32, 0); // Sends a payload using auto-retry/auto-ack features
-     * @endrst
+     * ```cpp
+     * radio.send(&data, 32, 1); // Sends a payload with no acknowledgement requested
+     * radio.send(&data, 32, 0); // Sends a payload using auto-retry/auto-ack features
+     * ```
      * @see setAutoAck(bool), setAutoAck(bool, uint8_t)
      * @param enable Enables (`true`) or disables (`false`) the affect of the
      * `multicast` parameter to send() or write().
@@ -1037,25 +1013,16 @@ public:
      * @param lnaEnable Enable or Disable the LNA (Low Noise Amplifier) Gain.
      * See table for Si24R1 modules below.  @p lnaEnable only affects
      * nRF24L01 modules with an LNA chip.
+     * | ``level`` (enum value)         | nRF24L01 | Si24R1 with<br>`lnaEnabled` = 1 | Si24R1 with<br>`lnaEnabled` = 0 |
+     * |:------------------------------:|:--------:|:------------------:|:------------------:|
+     * | @ref RF24_PA_MIN \ (0)  | -18 dBm  |       -6 dBm       |   -12 dBm          |
+     * | @ref RF24_PA_LOW \ (1)  | -12 dBm  |        0 dBm       |    -4 dBm          |
+     * | @ref RF24_PA_HIGH \ (2) |  -6 dBm  |        3 dBm       |     1 dBm          |
+     * | @ref RF24_PA_MAX \ (3)  |   0 dBm  |        7 dBm       |     4 dBm          |
      *
-     * @rst
-     * +--------------------------------+----------+--------------------+--------------------+
-     * | ``level`` (enum value)         | nRF24L01 | Si24R1 with        | Si24R1 with        |
-     * +--------------------------------+----------+--------------------+--------------------+
-     * |                                |          | ``lnaEnabled`` = 1 | ``lnaEnabled`` = 0 |
-     * +================================+==========+====================+====================+
-     * | :enumerator:`RF24_PA_MIN` (0)  | -18 dBm  |       -6 dBm       |   -12 dBm          |
-     * +--------------------------------+----------+--------------------+--------------------+
-     * | :enumerator:`RF24_PA_LOW` (1)  | -12 dBm  |        0 dBm       |    -4 dBm          |
-     * +--------------------------------+----------+--------------------+--------------------+
-     * | :enumerator:`RF24_PA_HIGH` (2) |  -6 dBm  |        3 dBm       |     1 dBm          |
-     * +--------------------------------+----------+--------------------+--------------------+
-     * | :enumerator:`RF24_PA_MAX` (3)  |   0 dBm  |        7 dBm       |     4 dBm          |
-     * +--------------------------------+----------+--------------------+--------------------+
+     * @note
      *
-     * .. note:: The :func:`getPaLevel()` function does not care what was passed ``lnaEnable``
-     *     parameter.
-     * @endrst
+     *     The getPaLevel() function does not care what was passed `lnaEnable` parameter.
      */
     void setPaLevel(uint8_t level, bool lnaEnable=1);
 
@@ -1071,10 +1038,10 @@ public:
      *
      * Value resets with each new transmission. Allows roughly estimating signal strength.
      * @return Returns values from 0 to 15.
-     * @rst
-     * .. hint:: the maximum limit of this number is controlled via the ``count``
-     *     parameter to the :func:`setAutoRetry()` function.
-     * @endrst
+     * !!! hint
+     *
+     *     The maximum limit of this number is controlled via the `count`
+     *     parameter to the setAutoRetry() function.
      */
     uint8_t lastTxArc(void);
 
@@ -1082,16 +1049,15 @@ public:
      * Set the transmission Data Rate
      * @param speed Specify one of the following values (as defined by
      * @ref rf24_datarate_e):
-     * @rst
-     * .. csv-table::
-     *     :header: "``speed`` (enum value)", "description"
+     * | `speed` (enum value) | description |
+     * |:---------:|:--------------------:|
+     * | @ref RF24_1MBPS (0) | for 1 Mbps |
+     * | @ref RF24_2MBPS (1) | for 2 Mbps |
+     * | @ref RF24_250KBPS (2) | for 250 kpbs |
+     * !!! warning
      *
-     *     ":enumerator:`RF24_1MBPS` (0)", "for 1 Mbps"
-     *     ":enumerator:`RF24_2MBPS` (1)", "for 2 Mbps"
-     *     ":enumerator:`RF24_250KBPS` (2)", "for 250 kpbs"
-     * .. warning:: Setting :enumerator:`RF24_250KBPS` will fail for non-plus modules
-     *     (when :func:`isPVariant()` returns ``false``).
-     * @endrst
+     *     Setting @ref RF24_250KBPS will fail for non-plus modules
+     *     (when isPVariant() returns `false`).
      * @return true if the change was successful
      */
     void setDataRate(rf24_datarate_e speed);
@@ -1105,30 +1071,25 @@ public:
 
     /**
      * Set the CRC checksum length (in bytes)
-     * @rst
-     * .. note:: CRC checking cannot be disabled if auto-ack is enabled.
+     * @note
+     *
+     *     CRC checking cannot be disabled if auto-ack is enabled.
      *     Additionally, CRC checksum is automatically used when the auto-ack
      *     feature is enabled.
-     * @endrst
      * @param length Specify the CRC checksum length in bytes
-     * @rst
-     * .. csv-table::
-     *     :header: "length", "description"
-     *     :widths: 3, 7
-     *
-     *     "0", "to disable using CRC checksums"
-     *     "1", "to use 8-bit checksums"
-     *     "2", "to use 16-bit checksums"
-     * @endrst
+     * | `length` | description |
+     * |:--------:|:-------------:|
+     * | 0 | to disable using CRC checksums |
+     * | 1 | to use 8-bit checksums |
+     * | 2 | to use 16-bit checksums |
      */
     void setCrc(uint8_t length);
 
     /**
      * Get the CRC checksum length (in bytes)
-     * @rst
-     * .. note:: CRC checksum is automatically used when the auto-ack feature is
-     *     enabled.
-     * @endrst
+     * @note
+     *
+     *     CRC checksum is automatically used when the auto-ack feature is enabled.
      * @return The number of bytes used for a CRC checksum (see table in setCrc())
      */
     uint8_t getCrc(void);
@@ -1188,12 +1149,9 @@ public:
      *
      * The following code configures the IRQ pin to only reflect the "data received"
      * event:
-     * @rst
-     * .. code-block::
-     *
-     *     radio.interruptConfig(0, 0, 1);
-     * @endrst
-     *
+     * ```cpp
+     * radio.interruptConfig(0, 0, 1);
+     * ```
      * @param dataReady `true` ignores the "data received" event, `false` reflects the
      * "data received" event on the IRQ pin.
      * @param dataSent  `true` ignores the "data sent" event, `false` reflects the
@@ -1210,10 +1168,10 @@ public:
      * 1. Arduino sends data to RPi, switches to RX mode
      * 2. The RPi receives the data, switches to TX mode and sends before the Arduino radio is in RX mode
      * 3. If AutoACK is disabled, this can be set as low as 0. If AA/ESB enabled, set to 100uS minimum on RPi
-     * @rst
-     * .. warning:: If set to 0, ensure 130uS delay after :func:`stopListening()` and
-     *     before any calls to :func:`send()`
-     * @endrst
+     * !!! warning
+     *
+     *     If set to 0, ensure 130uS delay after stopListening() and
+     *     before any calls to send()
      */
     uint32_t txDelay;
 
@@ -1229,35 +1187,37 @@ public:
 
     /**
      * Transmission of constant carrier wave with defined frequency and output power
-     * @rst
-     * .. warning:: If :func:`isPVariant()` returns ``true``, then this function takes extra
+     * !!! warning
+     *
+     *     If isPVariant() returns `true`, then this function takes extra
      *     measures that alter some settings. These settings alterations include:
      *
-     *     - :func:`setAutoAck()` to ``false`` (for all pipes)
-     *     - :func:`setAutoRetry()` to retry ``0`` times with a delay of 250 microseconds
-     *     - set the TX address to 5 bytes of ``0xFF``
-     *     - :func:`flushTx()`
-     *     - load a 32 byte payload of ``0xFF`` into the TX FIFO's top level
-     *     - :func:`setCrc()` to ``0`` (disabling CRC checking).
-     * @endrst
+     *     - setAutoAck() to `false` (for all pipes)
+     *     - setAutoRetry() to retry `0` times with a delay of 250 microseconds
+     *     - set the TX address to 5 bytes of `0xFF`
+     *     - flushTx()
+     *     - load a 32 byte payload of `0xFF` into the TX FIFO's top level
+     *     - setCrc() to `0` (disabling CRC checking).
      */
     void startCarrierWave(void);
 
     /**
      * Stop transmission of constant wave and reset PLL and CONT registers
-     * @rst
-     * .. warning:: this function will :func:`powerDown()` the radio per recommendation
+     * !!! warning
+     *
+     *     This function will powerDown() the radio per recommendation
      *     of datasheet.
-     * .. important:: If :func:`isPVariant()` returns ``true``, please remember to
+     * !!! important
+     *
+     *     If isPVariant() returns `true`, please remember to
      *     re-configure the radio's settings
      *
-     *     .. code-block::
-     *
-     *         // re-establish default settings
-     *         setCrc(RF24_CRC_16);
-     *         setAutoAck(true);
-     *         setAutoRetry(5, 15);
-     * @endrst
+     *     ```cpp
+     *     // re-establish default settings
+     *     setCrc(RF24_CRC_16);
+     *     setAutoAck(true);
+     *     setAutoRetry(5, 15);
+     *     ```
      * @see startCarrierWave()
      */
     void stopCarrierWave(void);
@@ -1265,25 +1225,25 @@ public:
     /**
      * Open a pipe for reading
      * @see openReadingPipe(uint8_t, const uint8_t*)
-     * @rst
-     * .. important:: Pipes 1-5 should share the first 32 bits.
+     * !!! important
+     *
+     *     Pipes 1-5 should share the first 32 bits.
      *     Only the least significant byte should be unique, e.g.
-     *
-     *     .. code-block::
-     *
+     *     ```cpp
      *         openReadingPipe(1, 0xF0F0F0F0AA);
      *         openReadingPipe(2, 0xF0F0F0F066);
+     *     ```
+     * !!! warning
      *
-     * .. warning:: Pipe 0 is also used by the writing pipe so should typically be
+     *     Pipe 0 is also used by the writing pipe so should typically be
      *     avoided as a reading pipe.
      *
      *     If used, the reading pipe 0 address needs to be restored at avery call to
-     *     :func:`startListening()`, and the address is ONLY restored if the LSB is a
+     *     startListening(), and the address is ONLY restored if the LSB is a
      *     non-zero value.
      *
-     *     Read `this article &lt;http://maniacalbits.blogspot.com/2013/04/rf24-addressing-nrf24l01-radios-require.html&gt;`_ to understand how to avoid
+     *     Read [this article](http://maniacalbits.blogspot.com/2013/04/rf24-addressing-nrf24l01-radios-require.html) to understand how to avoid
      *     using malformed addresses.
-     * @endrst
      * @param number Which pipe number to open, should be in range [0, 5].
      * @param address The 40-bit address of the pipe to open.
      */
@@ -1292,14 +1252,12 @@ public:
     /**
      * Open a pipe for writing
      * @see openWritingPipe(const uint8_t)
-     * @rst
      *
      * Addresses are 40-bit hex values, e.g.:
      *
-     * .. code-block::
-     *
-     *     openWritingPipe(0xF0F0F0F0F0);
-     * @endrst
+     * ```cpp
+     * openWritingPipe(0xF0F0F0F0F0);
+     * ```
      * @param address The 40-bit address of the pipe to open.
      */
     void openWritingPipe(uint64_t address);
@@ -1313,10 +1271,10 @@ public:
      * microsecond pulse to start actively listening in RX mode.
      * @param level Use `true` for active `HIGH` state. Use `false` for
      * inactive `LOW` state.
-     * @rst
-     * .. important:: Please see data sheet for a much more detailed
-     *     description of this pin's usage.
-     * @endrst
+     * !!! important
+     *
+     *     Please see data sheet for a much more detailed description of this
+     *     pin's usage.
      */
     void ce(bool level);
 
@@ -1383,3 +1341,241 @@ private:
 
 };
 #endif // __RF24_H__
+
+
+/**
+ * @example{lineno} examples/GettingStarted/GettingStarted.ino
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use the Serial Monitor to change each node's behavior.
+ */
+
+/**
+ * @example{lineno} examples/AcknowledgementPayloads/AcknowledgementPayloads.ino
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another
+ * with Acknowledgement (ACK) payloads attached to ACK packets.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use the Serial Monitor to change each node's behavior.
+ */
+
+/**
+ * @example{lineno} examples/ManualAcknowledgements/ManualAcknowledgements.ino
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another
+ * with manually transmitted (non-automatic) Acknowledgement (ACK) payloads.
+ * This example still uses ACK packets, but they have no payloads. Instead the
+ * acknowledging response is sent with `write()`. This tactic allows for more
+ * updated acknowledgement payload data, where actual ACK payloads' data are
+ * outdated by 1 transmission because they have to loaded before receiving a
+ * transmission.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use the Serial Monitor to change each node's behavior.
+ */
+
+/**
+ * @example{lineno} examples/StreamingData/StreamingData.ino
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of streaming data from 1 nRF24L01 transceiver to another.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use the Serial Monitor to change each node's behavior.
+ */
+
+/**
+ * @example{lineno} examples/MulticeiverDemo/MulticeiverDemo.ino
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from as many as 6 nRF24L01 transceivers to
+ * 1 receiving transceiver. This technique is trademarked by
+ * Nordic Semiconductors as "MultiCeiver".
+ *
+ * This example was written to be used on up to 6 devices acting as TX nodes &
+ * only 1 device acting as the RX node (that's a maximum of 7 devices).
+ * Use the Serial Monitor to change each node's behavior.
+ */
+
+/**
+ * @example{lineno} examples/InterruptConfigure/InterruptConfigure.ino
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * This example uses Acknowledgement (ACK) payloads attached to ACK packets to
+ * demonstrate how the nRF24L01's IRQ (Interrupt Request) pin can be
+ * configured to detect when data is received, or when data has transmitted
+ * successfully, or when data has failed to transmit.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use the Serial Monitor to change each node's behavior.
+ */
+
+/**
+ * @example{lineno} examples/old_backups/GettingStarted_HandlingFailures/GettingStarted_HandlingFailures.ino
+ * Written by [TMRh20](http://github.com/TMRh20) in 2019
+ *
+ * This example demonstrates the basic getting started functionality, but with
+ * failure handling for the radio chip. Addresses random radio failures etc,
+ * potentially due to loose wiring on breadboards etc.
+ */
+
+/**
+ * @example{lineno} examples/old_backups/TransferTimeouts/TransferTimeouts.ino
+ * Written by [TMRh20](https://github.com/TMRh20)
+ *
+ * This example demonstrates the use of and extended timeout period and
+ * auto-retries/auto-reUse to increase reliability in noisy or low signal scenarios.
+ *
+ * Write this sketch to two different nodes.  Put one of the nodes into 'transmit'
+ * mode by connecting with the serial monitor and sending a 'T'.  The data <br>
+ * transfer will begin, with the receiver displaying the payload count and the
+ * data transfer rate.
+ */
+
+/**
+ * @example{lineno} examples/old_backups/pingpair_irq/pingpair_irq.ino
+ * Updated by [TMRh20](https://github.com/TMRh20)
+ *
+ * This is an example of how to user interrupts to interact with the radio, and a demonstration
+ * of how to use them to sleep when receiving, and not miss any payloads.<br>
+ * The pingpair_sleepy example expands on sleep functionality with a timed sleep option for the transmitter.
+ * Sleep functionality is built directly into my fork of the RF24Network library<br>
+ */
+
+/**
+ * @example{lineno} examples/old_backups/pingpair_sleepy/pingpair_sleepy.ino
+ * Updated by [TMRh20](https://github.com/TMRh20)
+ *
+ * This is an example of how to use the RF24 class to create a battery-
+ * efficient system.  It is just like the GettingStarted_CallResponse example, but the<br>
+ * ping node powers down the radio and sleeps the MCU after every
+ * ping/pong cycle, and the receiver sleeps between payloads. <br>
+ */
+
+/**
+ * @example{lineno} examples/rf24_ATTiny/rf24ping85/rf24ping85.ino
+ * <b>2014 Contribution by [tong67](https://github.com/tong67)</b><br>
+ * Updated 2020 by [2bndy5](http://github.com/2bndy5) for the
+ * [SpenceKonde ATTinyCore](https://github.com/SpenceKonde/ATTinyCore)<br>
+ * The RF24 library uses the [ATTinyCore by
+ * SpenceKonde](https://github.com/SpenceKonde/ATTinyCore)
+ *
+ * This sketch is a duplicate of the ManualAcknowledgements.ino example
+ * (without all the Serial input/output code), and it demonstrates
+ * a ATTiny25/45/85 or ATTiny24/44/84 driving the nRF24L01 transceiver using
+ * the RF24 class to communicate with another node.
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another
+ * with manually transmitted (non-automatic) Acknowledgement (ACK) payloads.
+ * This example still uses ACK packets, but they have no payloads. Instead the
+ * acknowledging response is sent with `write()`. This tactic allows for more
+ * updated acknowledgement payload data, where actual ACK payloads' data are
+ * outdated by 1 transmission because they have to loaded before receiving a
+ * transmission.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ */
+
+/**
+ * @example{lineno} examples/rf24_ATTiny/timingSearch3pin/timingSearch3pin.ino
+ * <b>2014 Contribution by [tong67](https://github.com/tong67)</b><br>
+ * Updated 2020 by [2bndy5](http://github.com/2bndy5) for the
+ * [SpenceKonde ATTinyCore](https://github.com/SpenceKonde/ATTinyCore)<br>
+ * The RF24 library uses the [ATTinyCore by
+ * SpenceKonde](https://github.com/SpenceKonde/ATTinyCore)
+ *
+ * This sketch can be used to determine the best settle time values to use for
+ * RF24::csDelay in RF24::csn() (private function).
+ * @see RF24::csDelay
+ *
+ * The settle time values used here are 100/20. However, these values depend
+ * on the actual used RC combiniation and voltage drop by LED. The
+ * intermediate results are written to TX (PB3, pin 2 -- using Serial).
+ *
+ * For schematic details, see introductory comment block in the rf24ping85.ino sketch.
+ */
+
+/**
+ * @example{lineno} examples/old_backups/pingpair_dyn/pingpair_dyn.ino
+ *
+ * This is an example of how to use payloads of a varying (dynamic) size on Arduino.
+ */
+
+/**
+ * @example{lineno} examples/old_backups/scanner/scanner.ino
+ *
+ * Example to detect interference on the various channels available.
+ * This is a good diagnostic tool to check whether you're picking a
+ * good channel for your application.
+ *
+ * Inspired by cpixip.
+ * See http://arduino.cc/forum/index.php/topic,54795.0.html
+ */
+
+/**
+ * @example{lineno} examples_linux/gettingstarted.cpp
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another.
+ *
+ * This example was written  * This example was written to be used on up to 6 devices acting as TX nodes &
+ * only 1 device acting as the RX node (that's a maximum of 7 devices).
+ acting as "nodes".
+ * Use `ctrl+c` to quit at any time.
+ */
+
+/**
+ * @example{lineno} examples_linux/acknowledgementPayloads.cpp
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another
+ * with Acknowledgement (ACK) payloads attached to ACK packets.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use `ctrl+c` to quit at any time.
+ */
+
+/**
+ * @example{lineno} examples_linux/manualAcknowledgements.cpp
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another
+ * with manually transmitted (non-automatic) Acknowledgement (ACK) payloads.
+ * This example still uses ACK packets, but they have no payloads. Instead the
+ * acknowledging response is sent with `write()`. This tactic allows for more
+ * updated acknowledgement payload data, where actual ACK payloads' data are
+ * outdated by 1 transmission because they have to loaded before receiving a
+ * transmission.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use `ctrl+c` to quit at any time.
+ */
+
+/**
+ * @example{lineno} examples_linux/streamingData.cpp
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from 1 nRF24L01 transceiver to another.
+ *
+ * This example was written to be used on 2 devices acting as "nodes".
+ * Use `ctrl+c` to quit at any time.
+ */
+
+/**
+ * @example{lineno} examples_linux/multiceiverDemo.cpp
+ * Written by [2bndy5](http://github.com/2bndy5) in 2020
+ *
+ * A simple example of sending data from as many as 6 nRF24L01 transceivers to
+ * 1 receiving transceiver. This technique is trademarked by
+ * Nordic Semiconductors as "MultiCeiver".
+ *
+ * This example was written to be used on up to 6 devices acting as TX nodes &
+ * only 1 device acting as the RX node (that's a maximum of 7 devices).
+ * Use `ctrl+c` to quit at any time.
+ */

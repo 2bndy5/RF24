@@ -1,0 +1,54 @@
+---
+title: Linux Installation
+
+
+---
+
+# Linux Installation
+
+
+Generic Linux devices are supported via the following drivers:
+
+* SPIDEV
+* MRAA
+* RPi (native via BCM2835)
+* LittleWire
+
+
+```
+The `./configure --driver=SPIDEV` option should work
+with most Linux systems supporting spi userspace device.
+```
+
+
+# Generic Manual Install
+
+
+
+1. Install prerequisites if there are any (MRAA, LittleWire libraries, setup [SPI](/Classes/classSPI/) device etc)
+
+
+```
+See the [MRAA documentation](http://iotdk.intel.com/docs/master/mraa/index.html)
+for more info on installing MRAA
+```
+
+2. Make a directory to contain the [RF24](/Classes/classRF24/) and possibly RF24Network lib and enter it ```shell mkdir ~/rf24libs cd ~/rf24libs ```
+3. Clone the [RF24](/Classes/classRF24/) repo ```shell git clone [https://github.com/2bndy5/RF24.git](https://github.com/2bndy5/RF24.git)[RF24](/Classes/classRF24/) ```
+4. Change to the new [RF24](/Classes/classRF24/) directory ```shell cd [RF24](/Classes/classRF24/) ```
+5. Configure build environment using ```shell ./configure ``` This script automatically detects device and build environment.
+For overriding automatic detections, use command-line switches, see ```shell ./configure &ndash;help ``` for description.
+6. Build the library, and run an example file ```shell make sudo make install cd examples_linux ``` Edit the gettingstarted example to set your pin configuration.
+```shell nano gettingstarted.cpp make sudo ./gettingstarted ``` 
+
+# Build using SPIDEV
+
+
+
+1. Make sure that spi device support is enabled and /dev/spidev<a>.<b> is present
+2. Manual Install using SPIDEV: ```shell ./configure &ndash;driver=SPIDEV make sudo make install ```
+3. Verify install by running an example. See the gettingstarted.cpp example for an example of pin configuration. 
+
+-------------------------------
+
+Updated on 29 December 2020 at 19:03:46 Pacific Standard Time

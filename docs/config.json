@@ -1,0 +1,22 @@
+{
+  "baseUrl": "/",
+  "copyImages": true,
+  "filesFilter": [".h", ".hpp", ".c", ".cpp", ""],
+  "imagesFolder": "images",
+  "indexClassesName": "classes",
+  "indexClassesTitle": "Classes",
+  "indexExamplesName": "examples",
+  "indexExamplesTitle": "Examples",
+  "indexFilesName": "files",
+  "indexFilesTitle": "Files",
+  "indexGroupsName": "groups",
+  "indexGroupsTitle": "Modules",
+  "indexInFolders": true,
+  "indexNamespacesName": "namespaces",
+  "indexNamespacesTitle": "Namespaces",
+  "indexRelatedPagesName": "pages",
+  "indexRelatedPagesTitle": "Related Pages",
+  "linkSuffix": "/",
+  "mainPageInRoot": true,
+  "mainPageName": "index"
+}

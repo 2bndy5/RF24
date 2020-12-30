@@ -50,9 +50,10 @@ Second parameter is the CS which can be on port C (`XMEGA_SPI_PORT_C`) or on por
 
 Call the `__start_timer()` to start the millisecond timer.
 
-```eval_rst
-.. note:: Note about the millisecond functionality:
+@note
+
+    Note about the millisecond functionality:
 
     The millisecond functionality is based on the TCE0 so don't use these pins as IO.
-```
+
 The operating frequency of the uC is 32MHz. If you have other frequency change the TCE0 registers appropriatly in function `__start_timer()` in *compatibility.c* file for your frequency.

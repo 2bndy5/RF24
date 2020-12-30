@@ -14,7 +14,6 @@ Following prerequisites need to be assured:
     ```shell
     git clone https://github.com/raspberrypi/tools rpi_tools
     ```
-
     and cross-compilation tools must be in PATH, for example
     ```shell
     export PATH=$PATH:/your/dir/rpi-tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
@@ -28,11 +27,11 @@ Following prerequisites need to be assured:
     ```
 2. configure for cross compilation
     ```shell
-    ./configure --remote=pi@target_linux_host
+    ./configure --remote=pi\@target_linux_host
     ```
     or to manually specify a driver (see `./configure --help`)
     ```shell
-    ./configure --remote=pi@target_linux_host --driver=<driver>
+    ./configure --remote=pi\@target_linux_host --driver=\<driver\>
     ```
 3. build
     ```shell
@@ -47,13 +46,11 @@ Following prerequisites need to be assured:
     make upload
     ```
 6. (optional) compile examples
-
     ```shell
     cd examples_linux
     make
     ```
 7. (optional) upload examples to target machine
-
     ```shell
     make upload
     ```
